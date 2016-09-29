@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\ImageCrop\scissors\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d97403326f7231ea510ea4464bb3f519589527a9">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\ImageCrop-scissors-unspecified_d1eb32406480d3feedbd964cf6b38868cc802404.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\com.android.support-design-23.4.0_8601f3bf5f47a1c922a87351fc47c86125787b67.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\dixit.patel\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.0.15\f0ab8b7c8010cad33b8debda5d09d233571dc486\rxjava-1.0.15.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="f0ab8b7c8010cad33b8debda5d09d233571dc486">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\rxjava-1.0.15_b5550bca3e951265d2bc3a00e236dc3316fe054f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.4.0_0718c5f20b49ba8308c3b7ea307c91abe08b784e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\dixit.patel\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\7.0.1\d5d13ea991eab0252e3710e5df3d6a9d4b21d461\butterknife-7.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5d13ea991eab0252e3710e5df3d6a9d4b21d461">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\butterknife-7.0.1_a6108c7c4324f093c5fbb8fc3962e8ed82421d54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\AndroidStudio\android-sdk-windows\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_225e13aa1976a92bd3726412c38d7cef28101886.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.0.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="aa81bfe8c5cc88c2472ca936ae71f0c3dd1766df">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\io.reactivex-rxandroid-1.0.1_9fd9400183fee599b042255d0dd451d526e38e50.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.4.0_a40ff7e861b849d9d5a047a05c705926e53c6d90.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.4.0_2c7c94c08daa4db1e29edd8d5c38e0bc34e87cd0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\dixit.patel\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\picasso-2.5.2_77d2c3e4c074f4890bfc27b2271e07cd9a6fb3ff.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.4.0_b32b35a665c0df7dd70890d3078bb24fef4011b4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\dixit.patel\.gradle\caches\modules-2\files-2.1\com.nostra13.universalimageloader\universal-image-loader\1.9.5\442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375\universal-image-loader-1.9.5.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\universal-image-loader-1.9.5_db4a4ed4d441cfc6dc91b3bb604907810a73cbeb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.4.0_66feab9830ff3ad100532de8f039c7330e692d75.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\pre-dexed\debug\internal_impl-23.4.0_2dc46f29d2067c4560e3f128e91e14da7c1c6395.jar" />
+    </item>
+
+</items>
