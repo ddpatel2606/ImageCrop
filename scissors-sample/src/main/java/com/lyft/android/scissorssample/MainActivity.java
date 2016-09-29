@@ -20,24 +20,43 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.lyft.android.scissors.CropView;
+import com.lyft.android.scissors.svgandroid.SVG;
+import com.lyft.android.scissors.svgandroid.SVGParser;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -56,9 +75,12 @@ public class MainActivity extends Activity {
 
     int PICK_IMAGE_FROM_GALLERY = 10001;
 
-    private static final float[] ASPECT_RATIOS = {0f, 1f, 9f/16f, 16f / 9f, 16f / 10f, 32f / 29f, 65f / 64f, 5f / 3f};
+    private static final float[] ASPECT_RATIOS = {0f, 1f, 9f / 16f, 16f / 9f, 16f / 10f, 32f / 29f, 65f / 64f, 5f / 3f};
 
-    private static final String[] ASPECT_LABELS = {"\u00D8","1:1","9:16", "16:9", "16:10", "32:29", "65:64", "5:3"};
+    private static final String[] ASPECT_LABELS = {"\u00D8", "1:1", "9:16", "16:9", "16:10", "32:29", "65:64", "5:3"};
+
+    @Bind(R.id.myMainLayout)
+    FrameLayout myMainLayout;
 
     @Bind(R.id.crop_view)
     CropView cropView;
@@ -68,6 +90,8 @@ public class MainActivity extends Activity {
 
     @Bind(R.id.pick_fab)
     View pickButton;
+
+    public int myMainLayoutId = 0;
 
     public static Activity mActivity;
 
@@ -97,12 +121,200 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity=this;
+        mActivity = this;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        myMainLayoutId = com.lyft.android.scissors.R.raw.bubble;
+
+        cropView.setImageSVGId(myMainLayoutId);
+
+
+        ListView mListView=null;
+        HorizontalListView HorizontalListView=null;
+        if (isTablet(MainActivity.this)) {
+             mListView = new ListView(MainActivity.this);
+            mListView.setScrollbarFadingEnabled(true);
+            mListView.setVerticalFadingEdgeEnabled(false);
+
+            final SvgImagesAdapter mSvgImagesAdapter = new SvgImagesAdapter(MainActivity.this);
+
+            mListView.setAdapter(mSvgImagesAdapter);
+
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    myMainLayoutId = mSvgImagesAdapter.getItem(position);
+
+                    cropView.setImageSVGId(myMainLayoutId);
+
+                    cropView.invalidate();
+                }
+            });
+
+        }
+        else
+        {
+            HorizontalListView =new HorizontalListView(MainActivity.this);
+
+            final SvgImagesAdapter mSvgImagesAdapter = new SvgImagesAdapter(MainActivity.this);
+
+            HorizontalListView.setAdapter(mSvgImagesAdapter);
+
+            HorizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    myMainLayoutId = mSvgImagesAdapter.getItem(position);
+
+                    cropView.setImageSVGId(myMainLayoutId);
+
+                    cropView.invalidate();
+                }
+            });
+
+        }
+
+        DisplayMetrics density = getDisplayMetrics();
+        if (isTablet(MainActivity.this)) {
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(150, density.heightPixels - 150);
+            params.gravity = Gravity.RIGHT;
+
+            if(mListView !=null)
+            myMainLayout.addView(mListView, params);
+
+            FrameLayout.LayoutParams paramsCrop = (FrameLayout.LayoutParams) cropView.getLayoutParams();
+            paramsCrop.setMargins(0, 0, 150, 0);
+            cropView.setLayoutParams(paramsCrop);
+        } else {
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(density.widthPixels,150);
+            params.gravity = Gravity.TOP;
+
+            if(HorizontalListView !=null)
+            myMainLayout.addView(HorizontalListView, params);
+
+            FrameLayout.LayoutParams paramsCrop = (FrameLayout.LayoutParams) cropView.getLayoutParams();
+            paramsCrop.setMargins(0, 150, 0, 0);
+            cropView.setLayoutParams(paramsCrop);
+        }
 
 
     }
+
+
+    public DisplayMetrics getDisplayMetrics() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((WindowManager) MainActivity.this.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+                .getMetrics(displayMetrics);
+        return displayMetrics;
+    }
+
+
+    private class SvgImagesAdapter extends BaseAdapter {
+        private List<Integer> mSvgRawResourceIds = new ArrayList<>();
+
+        private Context mContext;
+
+        public SvgImagesAdapter(Context context) {
+            mContext = context;
+
+            mSvgRawResourceIds.add(R.raw.bubble);
+            mSvgRawResourceIds.add(R.raw.clubs);
+            mSvgRawResourceIds.add(R.raw.spades);
+            mSvgRawResourceIds.add(R.raw.star_full);
+            mSvgRawResourceIds.add(R.raw.stop2);
+            mSvgRawResourceIds.add(R.raw.diamonds);
+            mSvgRawResourceIds.add(R.raw.shape_star);
+            mSvgRawResourceIds.add(R.raw.shape_heart);
+            mSvgRawResourceIds.add(R.raw.shape_flower);
+            mSvgRawResourceIds.add(R.raw.shape_star_2);
+            mSvgRawResourceIds.add(R.raw.shape_star_3);
+            mSvgRawResourceIds.add(R.raw.shape_circle_2);
+            mSvgRawResourceIds.add(R.raw.shape_5);
+            mSvgRawResourceIds.add( com.lyft.android.scissors.R.raw.mask);
+        }
+
+        @Override
+        public int getCount() {
+            return mSvgRawResourceIds.size();
+        }
+
+        @Override
+        public Integer getItem(int i) {
+            return mSvgRawResourceIds.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return mSvgRawResourceIds.get(i);
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            ImageView imageView = new ImageView(mContext);
+
+            imageView.setImageBitmap(getBitmap(mContext, getItem(i)));
+            if (!isTablet(MainActivity.this))
+                imageView.setPadding(10,10,10,10);
+            imageView.setBackgroundColor(Color.parseColor("#BBFFFFFF"));
+
+            return imageView;
+        }
+
+        public Bitmap getBitmap(Context context, int svgRawResourceId) {
+
+            Bitmap bitmap = Bitmap.createBitmap(150, 150,
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            paint.setColor(Color.BLACK);
+
+            if (svgRawResourceId > 0) {
+
+                if(svgRawResourceId== com.lyft.android.scissors.R.raw.mask)
+                {
+                    InputStream is = MainActivity.this.getResources().openRawResource(svgRawResourceId);
+                    Bitmap originalBitmap = BitmapFactory.decodeStream(is);
+                    canvas.drawBitmap(getResizedBitmap(originalBitmap,150,150),0,0,paint);
+                }
+                else
+                {
+                    SVG svg = SVGParser.getSVGFromInputStream(
+                            context.getResources().openRawResource(svgRawResourceId), 150, 150);
+                    canvas.drawPicture(svg.getPicture());
+                }
+            } else {
+                canvas.drawRect(new RectF(0.0f, 0.0f, 100, 100), paint);
+            }
+
+            return bitmap;
+        }
+
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
+    }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -119,7 +331,7 @@ public class MainActivity extends Activity {
             float newRatio = ASPECT_RATIOS[3];
             cropView.setViewportRatio(newRatio);
             //cropView.touchManager.setRatioX(Integer.valueOf(ASPECT_LABELS[3].split(":")[0]));
-           // cropView.touchManager.setRatioY(Integer.valueOf(ASPECT_LABELS[3].split(":")[1]));
+            // cropView.touchManager.setRatioY(Integer.valueOf(ASPECT_LABELS[3].split(":")[1]));
 
             updateButtons();
         }
@@ -146,11 +358,11 @@ public class MainActivity extends Activity {
                     @Override
                     public void call(Void nothing) {
 
-                      //  File croppedNewFile = ScaleImage(croppedFile.getAbsolutePath(), Environment.getExternalStorageDirectory().getAbsolutePath(),
-                           //     "cropped1.png", 1920, 1080);
+                        //  File croppedNewFile = ScaleImage(croppedFile.getAbsolutePath(), Environment.getExternalStorageDirectory().getAbsolutePath(),
+                        //     "cropped1.png", 1920, 1080);
 
-                       // if (croppedFile.exists())
-                       //     croppedFile.delete();
+                        // if (croppedFile.exists())
+                        //     croppedFile.delete();
 
                         CropResultActivity.startUsing(croppedFile, MainActivity.this);
                     }
@@ -217,8 +429,7 @@ public class MainActivity extends Activity {
     }
 
     @OnClick(R.id.ratio_fab)
-    public void onRatioClicked()
-    {
+    public void onRatioClicked() {
         final float oldRatio = cropView.getImageRatio();
         selectedRatio = (selectedRatio + 1) % ASPECT_RATIOS.length;
 

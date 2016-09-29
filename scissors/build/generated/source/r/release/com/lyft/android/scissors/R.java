@@ -57,6 +57,22 @@ containing a value of this type.
         public static int crop__texture=0x7f020000;
         public static int crop__tile=0x7f020001;
     }
+    public static final class raw {
+        public static int bubble=0x7f030000;
+        public static int clubs=0x7f030001;
+        public static int diamonds=0x7f030002;
+        public static int mask=0x7f030003;
+        public static int shape_5=0x7f030004;
+        public static int shape_circle_2=0x7f030005;
+        public static int shape_flower=0x7f030006;
+        public static int shape_heart=0x7f030007;
+        public static int shape_star=0x7f030008;
+        public static int shape_star_2=0x7f030009;
+        public static int shape_star_3=0x7f03000a;
+        public static int spades=0x7f03000b;
+        public static int star_full=0x7f03000c;
+        public static int stop2=0x7f03000d;
+    }
     public static final class styleable {
         /** Attributes that can be used with a CropView.
            <p>Includes the following attributes:</p>

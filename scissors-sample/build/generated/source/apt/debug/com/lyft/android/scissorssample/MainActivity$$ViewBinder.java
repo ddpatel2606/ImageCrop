@@ -8,8 +8,10 @@ import butterknife.ButterKnife.ViewBinder;
 public class MainActivity$$ViewBinder<T extends com.lyft.android.scissorssample.MainActivity> implements ViewBinder<T> {
   @Override public void bind(final Finder finder, final T target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131492970, "field 'cropView' and method 'onTouchCropView'");
-    target.cropView = finder.castView(view, 2131492970, "field 'cropView'");
+    view = finder.findRequiredView(source, 2131558506, "field 'myMainLayout'");
+    target.myMainLayout = finder.castView(view, 2131558506, "field 'myMainLayout'");
+    view = finder.findRequiredView(source, 2131558507, "field 'cropView' and method 'onTouchCropView'");
+    target.cropView = finder.castView(view, 2131558507, "field 'cropView'");
     view.setOnTouchListener(
       new android.view.View.OnTouchListener() {
         @Override public boolean onTouch(
@@ -19,7 +21,7 @@ public class MainActivity$$ViewBinder<T extends com.lyft.android.scissorssample.
           return target.onTouchCropView(p1);
         }
       });
-    view = finder.findRequiredView(source, 2131492973, "field 'pickButton' and method 'onPickClicked'");
+    view = finder.findRequiredView(source, 2131558510, "field 'pickButton' and method 'onPickClicked'");
     target.pickButton = view;
     view.setOnClickListener(
       new butterknife.internal.DebouncingOnClickListener() {
@@ -29,7 +31,7 @@ public class MainActivity$$ViewBinder<T extends com.lyft.android.scissorssample.
           target.onPickClicked();
         }
       });
-    view = finder.findRequiredView(source, 2131492971, "method 'onCropClicked'");
+    view = finder.findRequiredView(source, 2131558508, "method 'onCropClicked'");
     view.setOnClickListener(
       new butterknife.internal.DebouncingOnClickListener() {
         @Override public void doClick(
@@ -38,7 +40,7 @@ public class MainActivity$$ViewBinder<T extends com.lyft.android.scissorssample.
           target.onCropClicked();
         }
       });
-    view = finder.findRequiredView(source, 2131492972, "method 'onPickClicked'");
+    view = finder.findRequiredView(source, 2131558509, "method 'onPickClicked'");
     view.setOnClickListener(
       new butterknife.internal.DebouncingOnClickListener() {
         @Override public void doClick(
@@ -47,7 +49,7 @@ public class MainActivity$$ViewBinder<T extends com.lyft.android.scissorssample.
           target.onPickClicked();
         }
       });
-    view = finder.findRequiredView(source, 2131492974, "method 'onRatioClicked'");
+    view = finder.findRequiredView(source, 2131558511, "method 'onRatioClicked'");
     view.setOnClickListener(
       new butterknife.internal.DebouncingOnClickListener() {
         @Override public void doClick(
@@ -57,13 +59,14 @@ public class MainActivity$$ViewBinder<T extends com.lyft.android.scissorssample.
         }
       });
     target.buttons = Finder.listOf(
-        finder.<android.view.View>findRequiredView(source, 2131492971, "field 'buttons'"),
-        finder.<android.view.View>findRequiredView(source, 2131492972, "field 'buttons'"),
-        finder.<android.view.View>findRequiredView(source, 2131492974, "field 'buttons'")
+        finder.<android.view.View>findRequiredView(source, 2131558508, "field 'buttons'"),
+        finder.<android.view.View>findRequiredView(source, 2131558509, "field 'buttons'"),
+        finder.<android.view.View>findRequiredView(source, 2131558511, "field 'buttons'")
     );
   }
 
   @Override public void unbind(T target) {
+    target.myMainLayout = null;
     target.cropView = null;
     target.pickButton = null;
     target.buttons = null;

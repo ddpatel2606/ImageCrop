@@ -25,6 +25,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
@@ -42,8 +44,11 @@ import android.widget.ImageView;
 
 import com.lyft.android.scissors.CropViewExtensions.CropRequest;
 import com.lyft.android.scissors.CropViewExtensions.LoadRequest;
+import com.lyft.android.scissors.svgandroid.SVG;
+import com.lyft.android.scissors.svgandroid.SVGParser;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -63,7 +68,7 @@ public class CropView extends ImageView {
     Paint mPaintDebug =new Paint();
     Paint mPaintFrame=new Paint();
     public RectF mImageRect;
-    public Bitmap bitmap;
+    public Bitmap bitmap,maskBitmap;
     public Matrix transform = new Matrix();
     private Extensions extensions;
     int mViewWidth,mViewHeight;
@@ -81,6 +86,8 @@ public class CropView extends ImageView {
 
     public static int RATIO_X = 16;
     public static int RATIO_Y= 9;
+
+    public int imageSVGId=0;
 
     public CropView(Context context) {
         super(context);
@@ -111,6 +118,7 @@ public class CropView extends ImageView {
         }
 
         drawBitmap(canvas);
+
         drawOverlay(canvas);
         drawCorners(canvas);
         //handlers
@@ -121,6 +129,10 @@ public class CropView extends ImageView {
         //Debug info
         //drawDebugInfo(canvas);
     }
+
+
+
+
 
     private void drawDebugInfo(Canvas canvas) {
         mPaintDebug = new Paint();
@@ -569,8 +581,35 @@ public class CropView extends ImageView {
 
             canvas.drawBitmap(bitmap, transform, bitmapPaint);
 
-            return dst;
+
+            Bitmap result = finalMaskingImage(dst,maskBitmap,outputScale);
+
+            //canvas.translate(touchManager.mFrameRect.centerX() , touchManager.mFrameRect.centerY());
+           // Canvas canvas1 = new Canvas(result);
+
+            final Rect rects = new Rect((int)rect.left,(int) rect.top, (int)rect.width(), (int)rect.height());
+
+            canvas.drawBitmap(result, rects, rects, bitmapPaint);
+
+            return result;
         }
+
+
+    private Bitmap finalMaskingImage(Bitmap s, Bitmap maskBitmap ,float outputScale ) {
+        Bitmap original = s;
+
+
+        Bitmap result = Bitmap.createBitmap((int) (touchManager.mFrameRect.width() * outputScale), (int) (touchManager.mFrameRect.height() * outputScale),Bitmap.Config.ARGB_8888);
+        Canvas mCanvas = new Canvas(result);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        mCanvas.drawBitmap(original, 0, 0, null);
+        mCanvas.drawBitmap(getResizedBitmap(maskBitmap,(int) (touchManager.mFrameRect.width() * outputScale), (int) (touchManager.mFrameRect.height() * outputScale)), 0, 0, paint);
+
+        paint.setXfermode(null);
+        return result;
+    }
+
 
     float calculateOutputScale(int width, int height) {
         final float viewportHeight = touchManager.getViewportHeight();
@@ -589,6 +628,84 @@ public class CropView extends ImageView {
         touchManager.applyPositioningAndScale(transform);
 
         canvas.drawBitmap(bitmap, transform, bitmapPaint);
+
+        DisplayMetrics dm = getResources().getDisplayMetrics() ;
+        float strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, dm);
+
+        RectF overlayRect = new RectF((float) Math.floor(touchManager.mFrameRect.left)+strokeWidth,
+                (float) Math.floor(touchManager.mFrameRect.top+strokeWidth),
+                (float) Math.ceil(touchManager.mFrameRect.right-strokeWidth),
+                (float) Math.ceil(touchManager.mFrameRect.bottom-strokeWidth));
+
+
+        maskBitmap = getBitmap(getContext(),imageSVGId);
+
+        canvas.drawBitmap(maskBitmap,overlayRect.left,overlayRect.top,bitmapPaint);
+    }
+
+    public Bitmap getBitmap(Context context, int svgRawResourceId) {
+
+        DisplayMetrics dm = getResources().getDisplayMetrics() ;
+        float strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, dm);
+
+        RectF overlayRect = new RectF((float) Math.floor(touchManager.mFrameRect.left)+strokeWidth,
+                (float) Math.floor(touchManager.mFrameRect.top+strokeWidth),
+                (float) Math.ceil(touchManager.mFrameRect.right-strokeWidth),
+                (float) Math.ceil(touchManager.mFrameRect.bottom-strokeWidth));
+
+        Rect overlayRectd = new Rect((int) (Math.floor(touchManager.mFrameRect.left)+strokeWidth),
+                (int) Math.floor(touchManager.mFrameRect.top+strokeWidth),
+                (int) Math.ceil(touchManager.mFrameRect.right-strokeWidth),
+                (int) Math.ceil(touchManager.mFrameRect.bottom-strokeWidth));
+
+        Bitmap bitmap = Bitmap.createBitmap((int)overlayRect.width(), (int)overlayRect.height(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(Color.BLACK);
+
+        if (svgRawResourceId > 0) {
+
+            if(svgRawResourceId== com.lyft.android.scissors.R.raw.mask)
+            {
+                InputStream is = getContext().getResources().openRawResource(svgRawResourceId);
+                Bitmap originalBitmap = BitmapFactory.decodeStream(is);
+
+                canvas.drawBitmap(getResizedBitmap(originalBitmap,overlayRectd.width(),overlayRectd.height()),0,0,bitmapPaint);
+            }
+            else {
+                SVG svg = SVGParser.getSVGFromInputStream(
+                        context.getResources().openRawResource(svgRawResourceId), (int) overlayRect.width(), (int) overlayRect.height());
+                canvas.drawPicture(svg.getPicture());
+            }
+        } else {
+            canvas.drawRect(new RectF(0.0f, 0.0f, (int)overlayRect.width(), (int)overlayRect.height()), paint);
+        }
+
+        return bitmap;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
+    }
+
+
+    public void setImageSVGId(int id)
+    {
+        imageSVGId =id;
     }
 
     /**

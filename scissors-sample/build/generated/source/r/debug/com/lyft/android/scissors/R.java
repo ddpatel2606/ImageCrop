@@ -18,6 +18,22 @@ public final class R {
 		public static final int crop__texture = 0x7f02004b;
 		public static final int crop__tile = 0x7f02004c;
 	}
+	public static final class raw {
+		public static final int bubble = 0x7f060000;
+		public static final int clubs = 0x7f060001;
+		public static final int diamonds = 0x7f060002;
+		public static final int mask = 0x7f060003;
+		public static final int shape_5 = 0x7f060004;
+		public static final int shape_circle_2 = 0x7f060005;
+		public static final int shape_flower = 0x7f060006;
+		public static final int shape_heart = 0x7f060007;
+		public static final int shape_star = 0x7f060008;
+		public static final int shape_star_2 = 0x7f060009;
+		public static final int shape_star_3 = 0x7f06000a;
+		public static final int spades = 0x7f06000b;
+		public static final int star_full = 0x7f06000c;
+		public static final int stop2 = 0x7f06000d;
+	}
 	public static final class styleable {
 		public static final int[] CropView = { 0x7f0100b1, 0x7f0100b2, 0x7f0100b3, 0x7f0100b4, 0x7f0100b5 };
 		public static final int CropView_cropviewMaxScale = 3;
