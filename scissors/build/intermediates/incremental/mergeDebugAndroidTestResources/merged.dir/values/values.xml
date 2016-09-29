@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CropView"><attr format="float" name="cropviewViewportRatio"/><attr format="color" name="cropviewViewportOverlayColor"/><attr format="dimension" name="cropviewViewportOverlayPadding"/><attr format="float" name="cropviewMaxScale"/><attr format="float" name="cropviewMinScale"/></declare-styleable>
+</resources>

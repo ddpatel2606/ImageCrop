@@ -1,0 +1,76 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:2:1-32:12
+	package
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:3:5-46
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:4:5-63
+	android:versionCode
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+application
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:7:3-27:17
+MERGED from [com.android.support:design:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\design\23.4.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\AndroidManifest.xml:7:5-20
+	android:theme
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:9:7-44
+	android:name
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:8:7-26
+activity#com.lyft.android.scissorssample.MainActivity
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:12:5-21:16
+	android:label
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:14:9-41
+	android:icon
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:15:9-43
+	android:name
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:13:9-37
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:17:7-20:23
+action#android.intent.action.MAIN
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:18:9-61
+	android:name
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:18:17-58
+category#android.intent.category.LAUNCHER
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:19:9-69
+	android:name
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:19:19-66
+activity#com.lyft.android.scissorssample.CropResultActivity
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:22:5-25:11
+	android:noHistory
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:24:9-33
+	android:name
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:23:9-43
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:29:3-78
+	android:name
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:29:20-75
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:30:3-79
+	android:name
+		ADDED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml:30:20-76
+uses-sdk
+INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [ImageCrop:scissors:unspecified] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\ImageCrop\scissors\unspecified\AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:design:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\design\23.4.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\AndroidManifest.xml:5:5-43
+MERGED from [io.reactivex:rxandroid:1.0.1] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\io.reactivex\rxandroid\1.0.1\AndroidManifest.xml:19:5-43
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:23.4.0] D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidStudioWorkSpace\ImageCrop\scissors-sample\src\main\AndroidManifest.xml

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\AndroidStudioWorkSpace\\ImageCrop\\scissors-sample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_aspect_ratio.png",
+        "source": "D:\\AndroidStudioWorkSpace\\ImageCrop\\scissors-sample\\src\\main\\res\\drawable-hdpi\\ic_aspect_ratio.png"
+    },
+    {
+        "merged": "D:\\AndroidStudioWorkSpace\\ImageCrop\\scissors-sample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_content_add.png",
+        "source": "D:\\AndroidStudioWorkSpace\\ImageCrop\\scissors-sample\\src\\main\\res\\drawable-hdpi\\ic_content_add.png"
+    },
+    {
+        "merged": "D:\\AndroidStudioWorkSpace\\ImageCrop\\scissors-sample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_content_content_cut.png",
+        "source": "D:\\AndroidStudioWorkSpace\\ImageCrop\\scissors-sample\\src\\main\\res\\drawable-hdpi\\ic_content_content_cut.png"
+    }
+]
