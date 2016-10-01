@@ -74,7 +74,7 @@ public class CropView extends ImageView {
     int mViewWidth,mViewHeight;
     CropViewConfig config;
     Uri mImageUri;
-    int mAngle=0;
+    int mAngle=0,paintAlpha=255;
 
     private static final int TRANSLUCENT_WHITE = 0xBBFFFFFF;
     private static final int WHITE = 0xFFFFFFFF;
@@ -553,7 +553,6 @@ public class CropView extends ImageView {
             if (bitmap == null) {
                 return null;
             }
-
             final int viewportWidth = touchManager.getViewportWidth();
             final int viewportHeight = touchManager.getViewportHeight();
 
@@ -584,9 +583,6 @@ public class CropView extends ImageView {
 
             Bitmap result = finalMaskingImage(dst,maskBitmap,outputScale);
 
-            //canvas.translate(touchManager.mFrameRect.centerX() , touchManager.mFrameRect.centerY());
-           // Canvas canvas1 = new Canvas(result);
-
             final Rect rects = new Rect((int)rect.left,(int) rect.top, (int)rect.width(), (int)rect.height());
 
             canvas.drawBitmap(result, rects, rects, bitmapPaint);
@@ -594,18 +590,51 @@ public class CropView extends ImageView {
             return result;
         }
 
+    Paint maskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    Paint imagePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    private Bitmap finalMaskingImage(Bitmap s, Bitmap maskBitmap ,float outputScale ) {
-        Bitmap original = s;
-
-
+    private Bitmap finalMaskingImage(Bitmap original, Bitmap maskBitmap ,float outputScale ) {
         Bitmap result = Bitmap.createBitmap((int) (touchManager.mFrameRect.width() * outputScale), (int) (touchManager.mFrameRect.height() * outputScale),Bitmap.Config.ARGB_8888);
         Canvas mCanvas = new Canvas(result);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        mCanvas.drawBitmap(original, 0, 0, null);
-        mCanvas.drawBitmap(getResizedBitmap(maskBitmap,(int) (touchManager.mFrameRect.width() * outputScale), (int) (touchManager.mFrameRect.height() * outputScale)), 0, 0, paint);
 
+
+        if(imageSVGId ==R.raw.mask) {
+
+            maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP)); //maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+
+            imagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
+
+            mCanvas.drawBitmap(original, 0, 0, imagePaint);
+            mCanvas.drawBitmap(getResizedBitmap(maskBitmap, (int) (touchManager.mFrameRect.width() * outputScale),
+                    (int) (touchManager.mFrameRect.height() * outputScale)), 0, 0, maskPaint);
+
+            imagePaint.setXfermode(null);
+            maskPaint.setXfermode(null);
+
+        }
+        else if(imageSVGId ==R.raw.circle_stroke) {
+
+            maskPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+
+            imagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));
+
+            mCanvas.drawBitmap(original, 0, 0, imagePaint);
+            mCanvas.drawBitmap(getResizedBitmap(maskBitmap, (int) (touchManager.mFrameRect.width() * outputScale),
+                    (int) (touchManager.mFrameRect.height() * outputScale)), 0, 0, maskPaint);
+
+            imagePaint.setXfermode(null);
+            maskPaint.setXfermode(null);
+
+        }
+         else
+        {
+            mCanvas.drawBitmap(original, 0, 0, null);
+            mCanvas.drawBitmap(getResizedBitmap(maskBitmap, (int) (touchManager.mFrameRect.width() * outputScale),
+                    (int) (touchManager.mFrameRect.height() * outputScale)), 0, 0, paint);
+
+        }
         paint.setXfermode(null);
         return result;
     }
@@ -642,6 +671,7 @@ public class CropView extends ImageView {
 
         canvas.drawBitmap(maskBitmap,overlayRect.left,overlayRect.top,bitmapPaint);
     }
+    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public Bitmap getBitmap(Context context, int svgRawResourceId) {
 
@@ -661,8 +691,9 @@ public class CropView extends ImageView {
         Bitmap bitmap = Bitmap.createBitmap((int)overlayRect.width(), (int)overlayRect.height(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
         paint.setColor(Color.BLACK);
+        paint.setAlpha(paintAlpha);
 
         if (svgRawResourceId > 0) {
 
@@ -671,7 +702,7 @@ public class CropView extends ImageView {
                 InputStream is = getContext().getResources().openRawResource(svgRawResourceId);
                 Bitmap originalBitmap = BitmapFactory.decodeStream(is);
 
-                canvas.drawBitmap(getResizedBitmap(originalBitmap,overlayRectd.width(),overlayRectd.height()),0,0,bitmapPaint);
+                canvas.drawBitmap(getResizedBitmap(originalBitmap,overlayRectd.width(),overlayRectd.height()),0,0,paint);
             }
             else {
                 SVG svg = SVGParser.getSVGFromInputStream(

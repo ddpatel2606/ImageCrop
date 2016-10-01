@@ -2523,19 +2523,22 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int bubble=0x7f060000;
-        public static final int clubs=0x7f060001;
-        public static final int diamonds=0x7f060002;
-        public static final int mask=0x7f060003;
-        public static final int shape_5=0x7f060004;
-        public static final int shape_circle_2=0x7f060005;
-        public static final int shape_flower=0x7f060006;
-        public static final int shape_heart=0x7f060007;
-        public static final int shape_star=0x7f060008;
-        public static final int shape_star_2=0x7f060009;
-        public static final int shape_star_3=0x7f06000a;
-        public static final int spades=0x7f06000b;
-        public static final int star_full=0x7f06000c;
-        public static final int stop2=0x7f06000d;
+        public static final int circle=0x7f060001;
+        public static final int circle_stroke=0x7f060002;
+        public static final int clubs=0x7f060003;
+        public static final int diamonds=0x7f060004;
+        public static final int mask=0x7f060005;
+        public static final int shape_5=0x7f060006;
+        public static final int shape_circle_2=0x7f060007;
+        public static final int shape_flower=0x7f060008;
+        public static final int shape_heart=0x7f060009;
+        public static final int shape_star=0x7f06000a;
+        public static final int shape_star_2=0x7f06000b;
+        public static final int shape_star_3=0x7f06000c;
+        public static final int spades=0x7f06000d;
+        public static final int star_full=0x7f06000e;
+        public static final int stop2=0x7f06000f;
+        public static final int triangle=0x7f060010;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f070000;

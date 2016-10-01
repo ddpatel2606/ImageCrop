@@ -15,11 +15,13 @@
  */
 package com.lyft.android.scissorssample;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -34,6 +36,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -63,6 +66,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
+import permissionhelper.PermissionHelper;
+import permissionhelper.annotations.PermissionDenied;
+import permissionhelper.annotations.PermissionGranted;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -124,15 +130,51 @@ public class MainActivity extends Activity {
         mActivity = this;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        myMainLayoutId = com.lyft.android.scissors.R.raw.bubble;
 
+        // Android M Permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!PermissionHelper.getInstance().hasPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                PermissionHelper.getInstance().requestPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            } else {
+                onCreateCall();
+
+            }
+        }
+        else
+        {
+            onCreateCall();
+
+        }
+    }
+
+    @PermissionGranted(permission = Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void GET_ACCOUNTS_Granted() {
+
+        onCreateCall();
+    }
+
+    @PermissionDenied(permission = Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void GET_ACCOUNTS_Denied() {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionHelper.getInstance().onRequestPermissionsResult(this, permissions, grantResults);
+    }
+
+    public void onCreateCall()
+    {
+        pickButton.setVisibility(View.VISIBLE);
+
+        myMainLayoutId = com.lyft.android.scissors.R.raw.circle_stroke;
         cropView.setImageSVGId(myMainLayoutId);
-
 
         ListView mListView=null;
         HorizontalListView HorizontalListView=null;
         if (isTablet(MainActivity.this)) {
-             mListView = new ListView(MainActivity.this);
+            mListView = new ListView(MainActivity.this);
             mListView.setScrollbarFadingEnabled(true);
             mListView.setVerticalFadingEdgeEnabled(false);
 
@@ -181,7 +223,7 @@ public class MainActivity extends Activity {
             params.gravity = Gravity.RIGHT;
 
             if(mListView !=null)
-            myMainLayout.addView(mListView, params);
+                myMainLayout.addView(mListView, params);
 
             FrameLayout.LayoutParams paramsCrop = (FrameLayout.LayoutParams) cropView.getLayoutParams();
             paramsCrop.setMargins(0, 0, 150, 0);
@@ -191,13 +233,12 @@ public class MainActivity extends Activity {
             params.gravity = Gravity.TOP;
 
             if(HorizontalListView !=null)
-            myMainLayout.addView(HorizontalListView, params);
+                myMainLayout.addView(HorizontalListView, params);
 
             FrameLayout.LayoutParams paramsCrop = (FrameLayout.LayoutParams) cropView.getLayoutParams();
             paramsCrop.setMargins(0, 150, 0, 0);
             cropView.setLayoutParams(paramsCrop);
         }
-
 
     }
 
@@ -218,16 +259,20 @@ public class MainActivity extends Activity {
         public SvgImagesAdapter(Context context) {
             mContext = context;
 
+            mSvgRawResourceIds.add(R.raw.circle_stroke);
+            mSvgRawResourceIds.add(R.raw.circle);
+            mSvgRawResourceIds.add(R.raw.triangle);
+            mSvgRawResourceIds.add(R.raw.shape_star);
+            mSvgRawResourceIds.add(R.raw.shape_heart);
+            mSvgRawResourceIds.add(R.raw.shape_flower);
+            mSvgRawResourceIds.add(R.raw.shape_star_2);
             mSvgRawResourceIds.add(R.raw.bubble);
             mSvgRawResourceIds.add(R.raw.clubs);
             mSvgRawResourceIds.add(R.raw.spades);
             mSvgRawResourceIds.add(R.raw.star_full);
             mSvgRawResourceIds.add(R.raw.stop2);
             mSvgRawResourceIds.add(R.raw.diamonds);
-            mSvgRawResourceIds.add(R.raw.shape_star);
-            mSvgRawResourceIds.add(R.raw.shape_heart);
-            mSvgRawResourceIds.add(R.raw.shape_flower);
-            mSvgRawResourceIds.add(R.raw.shape_star_2);
+
             mSvgRawResourceIds.add(R.raw.shape_star_3);
             mSvgRawResourceIds.add(R.raw.shape_circle_2);
             mSvgRawResourceIds.add(R.raw.shape_5);
@@ -338,11 +383,20 @@ public class MainActivity extends Activity {
     }
 
     File croppedFile;
+    ProgressDialog progress;
 
     @OnClick(R.id.crop_fab)
     public void onCropClicked() {
 
         croppedFile = new File(Environment.getExternalStorageDirectory(), "cropped.png");
+
+
+        progress = new ProgressDialog(this);
+        progress.setMessage("Preparing...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setCanceledOnTouchOutside(false);
+        progress.setCancelable(false);
+        progress.show();
 
         Observable<Void> onSave = Observable.from(cropView.extensions()
                 .crop()
@@ -357,6 +411,11 @@ public class MainActivity extends Activity {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void nothing) {
+
+                        if(progress !=null && progress.isShowing())
+                        {
+                            progress.dismiss();
+                        }
 
                         //  File croppedNewFile = ScaleImage(croppedFile.getAbsolutePath(), Environment.getExternalStorageDirectory().getAbsolutePath(),
                         //     "cropped1.png", 1920, 1080);

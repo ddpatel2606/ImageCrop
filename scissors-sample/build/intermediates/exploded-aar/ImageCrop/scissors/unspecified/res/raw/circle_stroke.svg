@@ -1,0 +1,21 @@
+
+    <svg xmlns:svg="http://www.w3.org/2000/svg"
+        height="64"
+        width="64"
+        xmlns="http://www.w3.org/2000/svg">
+
+          <g>
+                <title>Layer 1</title>
+                <circle
+                    cx="32.20023"
+                    cy="32.17514"
+                    fill="none"
+                    id="svg_1"
+                    r="29.06979"
+                    stroke="#000000"
+                    stroke-width="0.5"
+                    stroke-dasharray="null"
+                    stroke-linecap="null"
+                    stroke-linejoin="null" />
+          </g>
+    </svg>
